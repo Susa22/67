@@ -87,5 +87,13 @@ categoryFilter.addEventListener('change', applyFilters);
 priceFilter.addEventListener('change', applyFilters);
 vegetarianFilter.addEventListener('change', applyFilters);
 // TODO 6: реалізуйте скидання всіх чотирьох умов.
+function resetFilters(){
+  searchInput.value='';
+  categoryFilter.value='all';
+  priceFilter.value='all';
+  vegetarianFilter.checked=false;
+  applyFilters();
+}
+resetButton.addEventListener('click',resetFilters);
 loadButton.addEventListener('click',()=>loadMenu(false));
 errorButton.addEventListener('click',()=>loadMenu(true));

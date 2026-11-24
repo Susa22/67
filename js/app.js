@@ -49,12 +49,14 @@ function applyFilters(){
   const selectedCategory = categoryFilter.value;
   const maxPriceValue = priceFilter.value;
   const maxPrice = (!maxPriceValue || maxPriceValue === 'all') ? Infinity : Number(maxPriceValue);
+  const isVegetarianOnly = vegetarianFilter.checked;
 
   const filtered = loadedMenu.filter(item => {
     const matchesSearch = !query || item.name.toLowerCase().includes(query);
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     const matchesPrice = item.price <= maxPrice;
-    return matchesSearch && matchesCategory && matchesPrice;
+    const matchesVegetarian = !isVegetarianOnly || item.vegetarian;
+    return matchesSearch && matchesCategory && matchesPrice && matchesVegetarian;
   });
 
   renderMenu(filtered);
@@ -83,6 +85,7 @@ async function loadMenu(shouldFail=false){
 searchInput.addEventListener('input', applyFilters);
 categoryFilter.addEventListener('change', applyFilters);
 priceFilter.addEventListener('change', applyFilters);
+vegetarianFilter.addEventListener('change', applyFilters);
 // TODO 6: реалізуйте скидання всіх чотирьох умов.
 loadButton.addEventListener('click',()=>loadMenu(false));
 errorButton.addEventListener('click',()=>loadMenu(true));
